@@ -1,9 +1,14 @@
 import 'package:astrolozy/routes.dart';
 import 'package:astrolozy/screens/splash/splash_screen.dart';
 import 'package:astrolozy/theme.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+
+  Crashlytics.instance.enableInDevMode = true;
+  // Pass all uncaught errors from the framework to Crashlytics.
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
   runApp(MyApp());
 }
 

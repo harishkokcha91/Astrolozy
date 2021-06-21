@@ -23,6 +23,8 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 30
@@ -41,7 +43,20 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            firebaseCrashlytics {
+                nativeSymbolUploadEnabled true
+            }
         }
+    }
+    dependencies {
+        implementation platform('com.google.firebase:firebase-bom:28.1.0')
+        // add the Firebase SDK for Google Analytics
+        implementation 'com.google.firebase:firebase-analytics'
+        // add SDKs for any other desired Firebase products
+        // https://firebase.google.com/docs/android/setup#available-libraries
+
+        // Add the Firebase Crashlytics SDK.
+        implementation 'com.google.firebase:firebase-crashlytics:18.0.1'
     }
 }
 
