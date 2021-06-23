@@ -12,8 +12,8 @@ class CustomRadio extends StatelessWidget {
     return Card(
         color: _gender.isSelected ? Color(0xFF3B4257) : Colors.white,
         child: Container(
-          height: 80,
-          width: 80,
+          height: 60,
+          width: 70,
           alignment: Alignment.center,
           margin: new EdgeInsets.all(5.0),
           child: Column(

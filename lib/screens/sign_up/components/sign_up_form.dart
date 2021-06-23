@@ -1,17 +1,14 @@
 import 'package:astrolozy/components/custom_radio.dart';
-import 'package:astrolozy/models/Gender.dart';
-import 'package:flutter/material.dart';
 import 'package:astrolozy/components/custom_surfix_icon.dart';
 import 'package:astrolozy/components/default_button.dart';
 import 'package:astrolozy/components/form_error.dart';
-import 'package:astrolozy/screens/complete_profile/complete_profile_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:astrolozy/models/Gender.dart';
+import 'package:astrolozy/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
-
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -20,7 +17,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  String email,fName,LName,gender,dob;
+  String email, fName, LName, gender, dob;
   String password;
   String conform_password;
   bool remember = false;
@@ -52,17 +49,19 @@ class _SignUpFormState extends State<SignUpForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          // buildGenderFormField(),
+          // buildConformPassFormField(),
+          buildGenderFormField(),
           FormError(errors: errors),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
             press: () {
-              if (_formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-              }
+              // if (_formKey.currentState.validate()) {
+              //   _formKey.currentState.save();
+              // if all are valid then go to success screen
+              // Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+              Navigator.pushNamed(context, HomeScreen.routeName);
+              // }
             },
           ),
         ],
@@ -176,7 +175,7 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNameNullError);
-        } 
+        }
         return null;
       },
       validator: (value) {
@@ -196,6 +195,7 @@ class _SignUpFormState extends State<SignUpForm> {
       ),
     );
   }
+
   TextFormField buildLNameFormField() {
     return TextFormField(
       keyboardType: TextInputType.name,
@@ -207,7 +207,7 @@ class _SignUpFormState extends State<SignUpForm> {
         return null;
       },
       validator: (value) {
-       /* if (value.isEmpty) {
+        /* if (value.isEmpty) {
           addError(error: kNameNullError);
           return "";
         }*/
@@ -224,26 +224,29 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  ListView buildGenderFormField() {
+  Container buildGenderFormField() {
     List<Gender> genders = [];
     genders.add(new Gender("Male", MdiIcons.genderMale, false));
     genders.add(new Gender("Female", MdiIcons.genderFemale, false));
     genders.add(new Gender("Others", MdiIcons.genderTransgender, false));
-    return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemCount: genders.length,
-        itemBuilder: (context, index) {
-          return InkWell(
-            splashColor: Colors.pinkAccent,
-            onTap: () {
-              setState(() {
-                genders.forEach((gender) => gender.isSelected = false);
-                genders[index].isSelected = true;
-              });
-            },
-            child: CustomRadio(genders[index]),
-          );
-        });
+    return Container(
+      height: 100,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemCount: genders.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              splashColor: Colors.pinkAccent,
+              onTap: () {
+                setState(() {
+                  genders.forEach((gender) => gender.isSelected = false);
+                  genders[index].isSelected = true;
+                });
+              },
+              child: CustomRadio(genders[index]),
+            );
+          }),
+    );
   }
 }
